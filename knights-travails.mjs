@@ -2,7 +2,7 @@ class Vertex {
   constructor(data) {
     this.data = data;
     this.previous = null;
-    this.steps = null;
+    this.steps = 0;
     this.adjacentIndices = [];
   }
   addAdjacentIndices(vertex) {
@@ -230,8 +230,6 @@ function knightsTravails(start, end) {
   let visited = [];
   chessboard[start[0]][start[1]].steps = 0;
 
-  /* Loop that goes through all vertices to determine which follow the rules of knights movement
-  starting from start and add all valid vertices to starts adjacentVertices array */
   if (start === end) {
     return "We got there in 0 steps!";
   } else {
@@ -260,12 +258,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col + 2][row + 1].data) ===
           JSON.stringify(end)
         ) {
-          return "You reached the end";
+          chessboard[col + 2][row + 1].previous = current;
+          chessboard[col + 2][row + 1].steps = 1 + current.steps;
+
+          console.log(
+            `You reached the end in ${chessboard[col + 2][row + 1].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col + 2][row + 1])) {
           continue;
         } else {
-          chessboard[start[0]][start[1]].previous = current;
-          chessboard[start[0]][start[1]].steps = current.steps + 1;
+          chessboard[col + 2][row + 1].previous = current;
+          chessboard[col + 2][row + 1].steps = 1 + current.steps;
 
           queue.push(chessboard[col + 2][row + 1]);
 
@@ -284,14 +294,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col + 2][row - 1].data) ===
           JSON.stringify(end)
         ) {
-          /* Instead of returning a string, make end reference the previous step and add a 1 to total step count and then return a string
-          that says ends step count*/
-          return "You found the end";
+          chessboard[col + 2][row - 1].previous = current;
+          chessboard[col + 2][row - 1].steps = 1 + current.steps;
+
+          console.log(
+            `You found the end in ${chessboard[col + 2][row - 1].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col + 2][row - 1])) {
           continue;
         } else {
           chessboard[col + 2][row - 1].previous = current;
-          chessboard[col + 2][row - 1].steps = current.steps + 1;
+          chessboard[col + 2][row - 1].steps = 1 + current.steps;
 
           queue.push(chessboard[col + 2][row - 1]);
           continue;
@@ -309,12 +329,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col + 1][row + 2].data) ===
           JSON.stringify(end)
         ) {
-          return "You found the end";
+          chessboard[col + 1][row + 2].previous = current;
+          chessboard[col + 1][row + 2].steps = 1 + current.steps;
+
+          console.log(
+            `You reached the end in ${chessboard[col + 1][row + 2].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col + 1][row + 2])) {
           continue;
         } else {
           chessboard[col + 1][row + 2].previous = current;
-          chessboard[col + 1][row + 2].steps = current.steps + 1;
+          chessboard[col + 1][row + 2].steps = 1 + current.steps;
           queue.push(chessboard[col + 1][row + 2]);
           continue;
         }
@@ -331,12 +363,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col + 1][row - 2].data) ===
           JSON.stringify(end)
         ) {
-          return "You found the end";
+          chessboard[col + 1][row - 2].previous = current;
+          chessboard[col + 1][row - 2].steps = 1 + current.steps;
+
+          console.log(
+            `You reached the end in ${chessboard[col + 1][row - 2].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col + 1][row - 2])) {
           continue;
         } else {
           chessboard[col + 1][row - 2].previous = current;
-          chessboard[col + 1][row - 2].steps = current.steps + 1;
+          chessboard[col + 1][row - 2].steps = 1 + current.steps;
           queue.push(chessboard[col + 1][row - 2]);
           continue;
         }
@@ -353,12 +397,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col - 2][row + 1].data) ===
           JSON.stringify(end)
         ) {
-          return "You found the end";
+          chessboard[col - 2][row + 1].previous = current;
+          chessboard[col - 2][row + 1].steps = 1 + current.steps;
+
+          console.log(
+            `You reached the end n ${chessboard[col - 2][row + 1].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col - 2][row + 1])) {
           continue;
         } else {
           chessboard[col - 2][row + 1].previous = current;
-          chessboard[col - 2][row + 1].steps = current.steps + 1;
+          chessboard[col - 2][row + 1].steps = 1 + current.steps;
           queue.push(chessboard[col - 2][row + 1]);
           continue;
         }
@@ -375,12 +431,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col - 2][row - 1].data) ===
           JSON.stringify(end)
         ) {
-          return "You found the end";
+          chessboard[col - 2][row - 1].previous = current;
+          chessboard[col - 2][row - 1].steps = 1 + current.steps;
+
+          console.log(
+            `You reached the end in ${chessboard[col - 2][row - 1].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col - 2][row - 1])) {
           continue;
         } else {
           chessboard[col - 2][row - 1].previous = current;
-          chessboard[col - 2][row - 1].steps = current.steps + 1;
+          chessboard[col - 2][row - 1].steps = 1 + current.steps;
           queue.push(chessboard[col - 2][row - 1]);
           continue;
         }
@@ -397,12 +465,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col - 1][row + 2].data) ===
           JSON.stringify(end)
         ) {
-          return "You found the end";
+          chessboard[col - 1][row + 2].previous = current;
+          chessboard[col - 1][row + 2].steps = 1 + current.steps;
+
+          console.log(
+            `You found the end in ${chessboard[col - 1][row + 2].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col - 1][row + 2])) {
           continue;
         } else {
           chessboard[col - 1][row + 2].previous = current;
-          chessboard[col - 1][row + 2].steps = current.steps + 1;
+          chessboard[col - 1][row + 2].steps = 1 + current.steps;
           queue.push(chessboard[col - 1][row + 2]);
           continue;
         }
@@ -419,12 +499,24 @@ function knightsTravails(start, end) {
           JSON.stringify(chessboard[col - 1][row - 2].data) ===
           JSON.stringify(end)
         ) {
-          return "You found the end";
+          chessboard[col - 1][row - 2].previous = current;
+          chessboard[col - 1][row - 2].steps = 1 + current.steps;
+
+          console.log(
+            `You found the end in ${chessboard[col - 1][row - 2].steps} steps`
+          );
+
+          displayKnightsPath(
+            chessboard[start[0]][start[1]],
+            chessboard[end[0]][end[1]]
+          );
+
+          return;
         } else if (visited.includes(chessboard[col - 1][row - 2])) {
           continue;
         } else {
           chessboard[col - 1][row - 2].previous = current;
-          chessboard[col - 1][row - 2].steps = current.steps;
+          chessboard[col - 1][row - 2].steps = 1 + current.steps;
           queue.push(chessboard[col - 1][row - 2]);
           continue;
         }
@@ -432,12 +524,16 @@ function knightsTravails(start, end) {
     }
   }
 }
-console.log(knightsTravails([0, 0], [1, 2]));
-/* Make currents adjacent vertices the vertices that follow the rules of knights movement.
-    Check if  */
-/* Loop through each of currents adjacent vertices:
-    if(adjacent vertex === end){
-      return the path we took to get there
-    }else{
-      queue.push(adjacent vertex)
-    } */
+function displayKnightsPath(start, end) {
+  let shortestPath = [];
+  let current = end;
+  while (JSON.stringify(current.data) !== JSON.stringify(start.data)) {
+    shortestPath.push(current.data);
+    current = current.previous;
+  }
+  shortestPath.push(start.data);
+  shortestPath.reverse().forEach((element) => {
+    console.log(element);
+  });
+}
+knightsTravails([0, 0], [7, 7]);
